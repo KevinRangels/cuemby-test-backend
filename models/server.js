@@ -11,6 +11,7 @@ class Server {
       usersRoutes: '/api/users',
       authRoutes: '/api/auth',
       settingRoutes: '/api/settings',
+      playerRoutes: '/api/players',
     };
 
     // Connect DB
@@ -38,6 +39,7 @@ class Server {
     this.app.use(this.paths.authRoutes, require('../routes/auth'));
     this.app.use(this.paths.usersRoutes, require('../routes/user'));
     this.app.use(this.paths.settingRoutes, require('../routes/settings'));
+    this.app.use(this.paths.playerRoutes, require('../routes/player'));
   }
 
   listen() {
