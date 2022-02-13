@@ -130,6 +130,21 @@ const getDataFut = async (req, res = response) => {
   });
 };
 
+const getDataDashboard = async (req, res = response) => {
+  const [totalPlayers, totalTeams, totalLeagues] = await Promise.all([
+    Player.countDocuments(),
+    Team.countDocuments(),
+    League.countDocuments(),
+  ]);
+
+  res.json({
+    totalPlayers,
+    totalTeams,
+    totalLeagues,
+  });
+};
+
 module.exports = {
   getDataFut,
+  getDataDashboard,
 };
