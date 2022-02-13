@@ -1,48 +1,49 @@
-// const { request, response } = require('express')
-// const jwt = require('jsonwebtoken');
-// const User = require('../models/user');
+const { request, response } = require('express');
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-// const validJWT = async(req = request, res = response, next) => {
+const validJWT = async (req = request, res = response, next) => {
+  const token = req.header('x-token');
 
-//     const token = req.header('x-token');
+  if (!token) {
+    return res.status(401).json({
+      ok: false,
+      msg: 'not token',
+    });
+  }
 
-//     if ( !token ) {
-//         return res.status(401).json({
-//             msg: 'not token'
-//         });
-//     }
+  try {
+    const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
-//     try {
+    const user = await User.findById(uid);
 
-//         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+    if (!user) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'token no valido - user not exist in DB',
+      });
+    }
 
-//         const user = await User.findById( uid )
+    // Verificar si el uid tiene estado en true
 
-//         if ( !user ) {
-//             return res.status(401).json({
-//                 msg: 'token no valido - user not exist in DB'
-//             });
-//         }
+    if (!user.state) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'token no valido - state false',
+      });
+    }
 
-//         // Verificar si el uid tiene estado en true
+    req.user = user; // enviando  usuario logeado
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      ok: false,
+      msg: 'Token no valid',
+    });
+  }
+};
 
-//         if (!user.state) {
-//             return res.status(401).json({
-//                 msg: 'token no valido - state false'
-//             });
-//         }
-
-//         req.user = user  // enviando  usuario logeado
-//         next()
-//     } catch (error) {
-//         console.log(error)
-//         res.status(401).json({
-//             msg: 'Token no valid'
-//         })
-//     }
-
-// }
-
-// module.exports = {
-//     validJWT
-// }
+module.exports = {
+  validJWT,
+};
