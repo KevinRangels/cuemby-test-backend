@@ -13,6 +13,8 @@ class Server {
       settingRoutes: '/api/settings',
       playerRoutes: '/api/players',
       teamRoutes: '/api/teams',
+      leagueRoutes: '/api/leagues',
+      countryRoutes: '/api/countries',
     };
 
     // Connect DB
@@ -42,6 +44,8 @@ class Server {
     this.app.use(this.paths.settingRoutes, require('../routes/settings'));
     this.app.use(this.paths.playerRoutes, require('../routes/player'));
     this.app.use(this.paths.teamRoutes, require('../routes/team'));
+    this.app.use(this.paths.leagueRoutes, require('../routes/leagues'));
+    this.app.use(this.paths.countryRoutes, require('../routes/countries'));
   }
 
   listen() {

@@ -2,7 +2,13 @@ const { response } = require('express');
 const Player = require('../models/player');
 
 const getPlayers = async (req, res = response) => {
-  const { search = '', page = 1, order = 'asc' } = req.query;
+  const {
+    search = '',
+    page = 1,
+    order = 'asc',
+    country = null,
+    league = null,
+  } = req.query;
 
   const options = {
     page: page,
@@ -26,6 +32,13 @@ const getPlayers = async (req, res = response) => {
   const query = {
     name: { $regex: search, $options: '$i' },
   };
+
+  if (country) {
+    query.country = country;
+  }
+  if (league) {
+    query.league = league;
+  }
 
   Player.paginate(
     {
