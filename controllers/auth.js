@@ -11,20 +11,21 @@ const login = async (req, res = response) => {
 
     if (!user) {
       return res.status(400).json({
-        msg: 'User / Password invalids',
+        msg: 'Credenciales inválidas',
       });
     }
 
     const validPassword = bcryptjs.compareSync(password, user.password);
     if (!validPassword) {
       return res.status(400).json({
-        msg: 'Password is invalid',
+        msg: 'Contraseña inválida',
       });
     }
 
     const token = await generateJWT(user.id);
 
     return res.json({
+      ok: true,
       user,
       token,
     });
