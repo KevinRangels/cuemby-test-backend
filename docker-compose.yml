@@ -5,7 +5,7 @@ services:
     container_name: cuembyapp
     restart: always
     build: .
-    ports: -"5000:8081"
+    ports: -"8080:8080"
     links: -mongo
     volumes: -.:/usr/src/app
   mongo:
