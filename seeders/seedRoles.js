@@ -10,6 +10,8 @@ const seederRols = async () => {
 
     console.log('DB online');
 
+    Rol.collection.drop();
+
     const roles = [
       {
         rol: 'ADMIN_ROLE',

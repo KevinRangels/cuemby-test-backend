@@ -10,6 +10,9 @@ const seederUserAdmin = async () => {
     });
 
     console.log('DB online');
+
+    User.collection.drop();
+
     const salt = bcryptjs.genSaltSync();
 
     const user = new User({
