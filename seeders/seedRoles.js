@@ -3,12 +3,10 @@ const Rol = require('../models/role');
 
 const seederRols = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/cuemby', {
+    await mongoose.connect('mongodb://mongo:27017/cuemby', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-
-    console.log('DB online');
 
     Rol.collection.drop();
 

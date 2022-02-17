@@ -5,9 +5,24 @@ services:
     container_name: cuembyapp
     restart: always
     build: .
-    ports: -"8080:8080"
-    links: -mongo
-    volumes: -.:/usr/src/app
+    ports:
+      - '4000:8081'
+    links:
+      - mongo
+    environment:
+      - PORT=8081
+      - MONGO_CNN=mongodb://mongo:27017/cuemby
+      - SECRETORPRIVATEKEY=0Z3snO
   mongo:
     container_name: mymongodatabase
     image: mongo
+    ports:
+      - 27017:27017
+  migration:
+    build:
+      context: .
+    command: bash -c "npm run seed-roles && npm run seed-user"
+    links:
+      - mongo
+    depends_on:
+      - mongo

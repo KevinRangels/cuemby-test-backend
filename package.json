@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "supervisor app.js",
+    "start": "node app.js",
     "seed-roles": "cd seeders && node seedRoles.js",
     "seed-user": "cd seeders && node seedUserAdmin.js",
     "test": "echo \"Error: no test specified\" && exit 1",

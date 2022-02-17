@@ -10,10 +10,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8080
-
-RUN npm run seed-roles
-
-RUN npm run seed-user
+EXPOSE 8081
 
 CMD ["npm", "start"]
